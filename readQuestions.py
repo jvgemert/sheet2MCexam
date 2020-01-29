@@ -22,15 +22,20 @@ By Jan van Gemert, http://jvgemert.github.io/
 import csv
 
 
+
 # the latex formatted table used for each question
 strQ = """
-\\begin{tabular}{p{6cm}p{12.5cm}|} 
+\\begin{tabular}{|p{6cm}p{12.5cm}|} 
 \\textbf{Question %i} & \\emph{%s \hfill %s}  \\\\ \\toprule  
-%s & 
+\\begin{tabular}{p{6cm}}
+%s 
+\\end{tabular} &
+\\begin{tabular}{p{12.4cm}}
 \\textbf{A:} %s \\newline 
 \\textbf{B:} %s \\newline  
 \\textbf{C:} %s \\newline  
-\\textbf{D:} %s \\\\ \\bottomrule 
+\\textbf{D:} %s  
+\\end{tabular} \\\\ \\bottomrule
 \\end{tabular}
 """
 
@@ -48,6 +53,7 @@ fOut = open(fNameOut, 'wt')
 i = 1
 with open('final.csv', 'rt') as fIn:
     reader = csv.DictReader(fIn, delimiter=';',)
+    #reader = csv.DictReader(fIn)
     for row in reader:
         print('Question %d' % i)
         formatted = formatQ(i, row)
