@@ -4,8 +4,8 @@ Lecture 1;Histograms and color;"Consider these color pairs: RGB(1, 0, 0)-HSI(0, 
 Lecture 1;Histograms and color;Using point processing on pixels with a typical 8-bit per channel RGB encoding, which operations do we need to apply to each channel to obtain an image with inverted colours? (x is the pixel from the input image);Subtract 255 from x;Multiply x by -1 and add (255*3);Multiply x by -1 and add 255;Subtract 128 from x;Option C;
 Lecture 1;Histograms and color;"Open question: For this 3x4 intensity image and its pixel values.   
     
-https://github.com/jvgemert/sheet2MCexam/blob/master/example.png
-     
+
+https://raw.githubusercontent.com/jvgemert/sheet2MCexam/master/example.png     
     
 Draw its histogram and apply histogram equalization. Give all the performed steps.";N.A.;N.A.;N.A.;N.A.;"
 (1pt) Draw its histogram
