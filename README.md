@@ -64,8 +64,7 @@ See the included final.xlsx sheet converted to final.csv for an example.
 #### Using Dropbox:
 
     - Upload images to Dropbox and make them sharebale for "Everyone with this link".
- 
-   - Copy the sharable link in the question or answer and make sure to replace "dl=0" with "dl=1": e.g. https://www.dropbox.com/s/zth9509ppmdlxsl/example.png?dl=1
+    - Copy the sharable link in the question or answer and make sure to replace "dl=0" with "dl=1": e.g. https://www.dropbox.com/s/zth9509ppmdlxsl/example.png?dl=1
 
 #### Using direct links to images:
    
