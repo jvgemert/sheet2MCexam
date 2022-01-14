@@ -41,6 +41,12 @@ The first line in the CSV file is the column header, named as:
     C = Option C
     D = Option D
 
+For open questions:
+
+    Make sure to start the question with: "Open question: ..."
+    Write: N.A. at the Options A, B, C, D
+    Write the grading rubric under the "answer" column.
+
 - Do not use "&" or other characters unescaped in the text. 
 
 - Write all the formulas in latex format: e.g. $\theta = \frac{a}{b}$. 
