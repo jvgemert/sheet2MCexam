@@ -25,6 +25,9 @@ A full example is included which was created as follows:
     2. Run readQuestions.py to convert final.csv to a .tex file called final.tex.
     3. Run pdflatex on exam.tex to create the exam.pdf
 
+Or using the Makefile:
+    1. Run "make"
+
 ### Spreadsheet layout
 
 The first line in the CSV file is the column header, named as:
@@ -37,7 +40,26 @@ The first line in the CSV file is the column header, named as:
     C = Option C
     D = Option D
 
+- Do not use "&" or other characters unescaped in the text. 
+
+- Write all the formulas in latex format: e.g. $\theta = \frac{a}{b}$. 
+
+- Use double new lines when you want them to appear and none for the rest.
+
 See the included final.xlsx sheet converted to final.csv for an example.
+
+
+### How to use images
+
+#### Using Dropbox:
+
+    - Upload images to Dropbox and make them sharebale for "Everyone with this link".
+ 
+   - Copy the sharable link in the question or answer and make sure to replace "dl=0" with "dl=1": e.g. https://www.dropbox.com/s/zth9509ppmdlxsl/example.png?dl=1
+
+#### Using direct links to images:
+   
+    - Simply use the image link in the question or answer: e.g. https://github.com/jvgemert/sheet2MCexam/blob/master/example.png
 
  
 ### About
