@@ -11,12 +11,14 @@ Read a CSV file and output a .tex file with LaTeX tables for multiple choice que
 
     final.xlsx              # Spreadsheet that has the questions
     final.csv               # Exported CSV file from the spreadsheet
+    final_images.csv        # Exported CSV file from the spreadsheet using images with links
     readQuestions.py        # Python script to run on the CSV file
     final.tex               # Output of readQuestions.py: converted CSV to latex tables
     exam.tex                # Parent Latex document that imports the questions
     exam.pdf                # Final exam, obtained by running pdflatex on exam.tex
+    Makefile                # Makefile that runs everything for simplicity
+    example.png             # Example image linked to from final_images.csv
 
-     
 ### How to use
 
 A full example is included which was created as follows:
@@ -40,6 +42,7 @@ The first line in the CSV file is the column header, named as:
     B = Option B
     C = Option C
     D = Option D
+    answer = The correct option. Make sure to use "Option A", "Option B", "Option C", "Option D" 
 
 For open questions:
 
@@ -66,8 +69,7 @@ See the included final.xlsx sheet converted to final.csv for an example.
 
 #### Using direct links to images:
    
-    - Simply use the image link in the question or answer: e.g. https://github.com/jvgemert/sheet2MCexam/blob/master/example.png
-
+    - Simply use the image link in the question or answer: e.g. https://raw.githubusercontent.com/jvgemert/sheet2MCexam/master/example.png 
  
 ### About
 
