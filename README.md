@@ -26,6 +26,7 @@ A full example is included which was created as follows:
     3. Run pdflatex on exam.tex to create the exam.pdf
 
 Or using the Makefile:
+
     1. Run "make"
 
 ### Spreadsheet layout
