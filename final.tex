@@ -7,13 +7,28 @@
 From the RGB cube, the color plane defined by fixing the coordinate R to 1 (ie: R=1) looks like: 
 \end{tabular} &
 \begin{tabular}{p{10.5cm}}
+
+
 \textbf{\unchecked A:} Green, Blue, White \newline 
-\textbf{\unchecked B:} Red, Purple, Black \newline  
-\textbf{\checked C:} Red, Yellow, White \newline  
-\textbf{\unchecked D:} Yellow, Purple, Black \newline  
+
+
+\textbf{\unchecked B:} Red, Purple, Black \newline 
+
+
+\textbf{\unchecked C:} Red, Yellow, White \newline 
+
+
+\textbf{\unchecked D:} Yellow, Purple, Black \newline 
+
+
+\textbf{\unchecked E:} Yellow, Red, Black \newline 
+
+
+\textbf{\unchecked F:} Red, Blue, Black \newline 
+
+
 \end{tabular} \\ \bottomrule
 \end{tabular}
-
 
 \begin{tabular}{|p{8cm}@{\hskip 0.5cm}p{10.5cm}|} 
 \toprule  
@@ -23,13 +38,19 @@ From the RGB cube, the color plane defined by fixing the coordinate R to 1 (ie: 
 Consider these color pairs: RGB(1, 0, 0)-HSI(0, 1, 1); RGB(1, 1, 1)-HSI(0, 0, 1); RGB(0, 0, 0)-HSI(0, 0, 1); RGB(0, 0, 1)-HSI(0, 1, 1/3). How many pairs represents the same color? 
 \end{tabular} &
 \begin{tabular}{p{10.5cm}}
-\textbf{\checked A:} Only 1 pair \newline 
-\textbf{\unchecked B:} 2 pairs \newline  
-\textbf{\unchecked C:} 3 pairs \newline  
-\textbf{\unchecked D:} All 4 pairs \newline  
+
+
+\textbf{\unchecked A:} Only 1 pair \newline 
+
+
+\textbf{\unchecked B:} 2 pairs \newline 
+
+
+\textbf{\unchecked C:} 3 pairs \newline 
+
+
 \end{tabular} \\ \bottomrule
 \end{tabular}
-
 
 \begin{tabular}{|p{8cm}@{\hskip 0.5cm}p{10.5cm}|} 
 \toprule  
@@ -39,36 +60,28 @@ Consider these color pairs: RGB(1, 0, 0)-HSI(0, 1, 1); RGB(1, 1, 1)-HSI(0, 0, 1)
 Using point processing on pixels with a typical 8-bit per channel RGB encoding, which operations do we need to apply to each channel to obtain an image with inverted colours? (x is the pixel from the input image) 
 \end{tabular} &
 \begin{tabular}{p{10.5cm}}
+
+
 \textbf{\unchecked A:} Subtract 255 from x \newline 
-\textbf{\unchecked B:} Multiply x by -1 and add (255*3) \newline  
-\textbf{\checked C:} Multiply x by -1 and add 255 \newline  
-\textbf{\unchecked D:} Subtract 128 from x \newline  
+
+
+\textbf{\unchecked B:} Multiply x by -1 and add (255*3) \newline 
+
+
+\textbf{\unchecked C:} Multiply x by -1 and add 255 \newline 
+
+
+\textbf{\unchecked D:} Subtract 128 from x \newline 
+
+
 \end{tabular} \\ \bottomrule
 \end{tabular}
 
-
-\begin{tabular}{|p{8cm}@{\hskip 0.5cm}p{10.5cm}|} 
+\begin{tabular}{|p{19cm}|} 
 \toprule  
-\textbf{Question 4} & \emph{Lecture 1 \hfill Histograms and color}  \\
+\textbf{Question 4}\hfill \emph{Lecture 1 \hfill Histograms and color}  \\
 \midrule 
-\begin{tabular}{p{8cm}} Open question: For this 3x4 intensity image and its pixel values. \newline\includegraphics[width=7cm,height=6cm,keepaspectratio]{l4_q1_o.png} \newline\newline Draw its histogram and apply histogram equalization. Give all the performed steps. 
-\end{tabular} &
-\begin{tabular}{p{10.5cm}}
-\textbf{Rubric:} \newline 
-
-(1pt) Draw its histogram
-
-Apply contrast stretching and give
- 
-(2pt) Contrast stretched histogram
- 
-(1pt) Contrast stretched image pixel values
- 
-Apply histogram equalization and give:
- 
-(4pt) Histogram equalized histogram
- 
-(2pt) Histogram equalized image pixel values  
-\end{tabular} \\ \bottomrule
+Open question: For this 3x4 intensity image and its pixel values. \newline\includegraphics[width=7cm,height=6cm,keepaspectratio]{example.png} \newline\newline Draw its histogram and apply histogram equalization. Give all the performed steps. \\ 
+\bottomrule
 \end{tabular}
 

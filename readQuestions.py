@@ -1,6 +1,5 @@
 """
-Multiple choice exam in LaTeX from a spreadsheet.
-
+Exam parsing to LaTeX from a spreadsheet.
 Read a CSV file and output a .tex file with LaTeX tables for multiple choice questions for importing in a parent LaTeX file.
 
 The first line in the CSV file is the column header, named as:
@@ -8,22 +7,22 @@ The first line in the CSV file is the column header, named as:
 ID = Some identifier (such as lecture number/title)
 info = Extra information (such as sub-topic)
 Q = Question
+answer = The answer or the rubric
 A = Option A
 B = Option B
-C = Option C
-D = Option D
+...
 
-See the included final.xlsx sheet converted to final.csv for an example.
-
+See the included final.csv or final_images.csv for an example.
 By Jan van Gemert, http://jvgemert.github.io/
 
 """
 
 import csv
-
 import wget
+from string import ascii_uppercase
 
-# the latex formatted table used for each question
+
+"""Latex strings for open questions with or without answers."""
 strQ_open_ans = """
 \\begin{tabular}{|p{8cm}@{\\hskip 0.5cm}p{10.5cm}|} 
 \\toprule  
@@ -48,7 +47,8 @@ strQ_open = """
 \\end{tabular}
 """
 
-strQ = """
+"""Latex strings for beginning and ending MCQs with or without answers."""
+strQ_begin = """
 \\begin{tabular}{|p{8cm}@{\\hskip 0.5cm}p{10.5cm}|} 
 \\toprule  
 \\textbf{Question %i} & \\emph{%s \\hfill %s}  \\\\ 
@@ -57,111 +57,59 @@ strQ = """
 %s 
 \\end{tabular} &
 \\begin{tabular}{p{10.5cm}}
-\\textbf{\\unchecked A:} %s \\newline 
-\\textbf{\\unchecked B:} %s \\newline  
-\\textbf{\\unchecked C:} %s \\newline  
-\\textbf{\\unchecked D:} %s \\newline  
+"""
+
+strQ_end = """
 \\end{tabular} \\\\ \\bottomrule
 \\end{tabular}
 """
 
-strQ_A = """
-\\begin{tabular}{|p{8cm}@{\\hskip 0.5cm}p{10.5cm}|} 
-\\toprule  
-\\textbf{Question %i} & \\emph{%s \\hfill %s}  \\\\ 
-\\midrule 
-\\begin{tabular}{p{8cm}}
-%s 
-\\end{tabular} &
-\\begin{tabular}{p{10.5cm}}
-\\textbf{\\checked A:} %s \\newline 
-\\textbf{\\unchecked B:} %s \\newline  
-\\textbf{\\unchecked C:} %s \\newline  
-\\textbf{\\unchecked D:} %s \\newline  
-\\end{tabular} \\\\ \\bottomrule
-\\end{tabular}
+strQ_checked = """
+\\textbf{\\checked %s:} %s \\newline 
+"""
+strQ_unchecked = """
+\\textbf{\\unchecked %s:} %s \\newline 
 """
 
-strQ_B = """
-\\begin{tabular}{|p{8cm}@{\\hskip 0.5cm}p{10.5cm}|} 
-\\toprule  
-\\textbf{Question %i} & \\emph{%s \\hfill %s}  \\\\  
-\\midrule 
-\\begin{tabular}{p{8cm}}
-%s 
-\\end{tabular} &
-\\begin{tabular}{p{10.5cm}}
-\\textbf{\\unchecked A:} %s \\newline 
-\\textbf{\\checked B:} %s \\newline  
-\\textbf{\\unchecked C:} %s \\newline  
-\\textbf{\\unchecked D:} %s \\newline  
-\\end{tabular} \\\\ \\bottomrule
-\\end{tabular}
-"""
-
-strQ_C = """
-\\begin{tabular}{|p{8cm}@{\\hskip 0.5cm}p{10.5cm}|} 
-\\toprule  
-\\textbf{Question %i} & \\emph{%s \\hfill %s}  \\\\ 
-\\midrule 
-\\begin{tabular}{p{8cm}}
-%s 
-\\end{tabular} &
-\\begin{tabular}{p{10.5cm}}
-\\textbf{\\unchecked A:} %s \\newline 
-\\textbf{\\unchecked B:} %s \\newline  
-\\textbf{\\checked C:} %s \\newline  
-\\textbf{\\unchecked D:} %s \\newline  
-\\end{tabular} \\\\ \\bottomrule
-\\end{tabular}
-"""
-
-strQ_D = """
-\\begin{tabular}{|p{8cm}@{\\hskip 0.5cm}p{10.5cm}|} 
-\\toprule  
-\\textbf{Question %i} & \\emph{%s \\hfill %s}  \\\\ 
-\\midrule 
-\\begin{tabular}{p{8cm}}
-%s 
-\\end{tabular} &
-\\begin{tabular}{p{10.5cm}}
-\\textbf{\\unchecked A:} %s \\newline 
-\\textbf{\\unchecked B:} %s \\newline  
-\\textbf{\\unchecked C:} %s \\newline  
-\\textbf{\\checked D:} %s \\newline  
-\\end{tabular} \\\\ \\bottomrule
-\\end{tabular}
-"""
-    
+"""Latex string for including images."""
 fig = """
 \\includegraphics[width=7cm,height=6cm,keepaspectratio]{%s} 
 """
 
 
-# apply the formatting to each question
+""" Parses the questions ('Q'), answers ('answer') and the multiple choice 
+options ('A-..') and the open questions and formates each question.
+"""
 def formatQ(i, row, ans):
-    row['Q'] = processQ(row['Q'])
-    row['A'] = processQ(row['A'])
-    row['B'] = processQ(row['B'])
-    row['C'] = processQ(row['C'])
-    row['D'] = processQ(row['D'])
-
-    if not ANSWER:
-        outQ = strQ % (i, row['ID'], row['info'], row['Q'], row['A'], row['B'], row['C'], row['D']) + '\n'
-        if row['Q'].startswith("Open"):
-            outQ = strQ_open % (i, row['ID'], row['info'], row['Q']) + '\n'
-
+    row['question'] = processQ(row['question'])
+        
+    # Parsing open questions
+    if row['question'].startswith("Open question"):
+        if not ANSWER:
+            outQ = strQ_open % (i, row['ID'], row['info'], row['question']) + '\n'
+        else:    
+            outQ = strQ_open_ans % (i, row['ID'], row['info'], row['question'], row['answer']) + '\n'
     else:
-        if ans == "Option A":
-            outQ = strQ_A % (i, row['ID'], row['info'], row['Q'], row['A'], row['B'], row['C'], row['D']) + '\n'
-        elif ans == "Option B":
-            outQ = strQ_B % (i, row['ID'], row['info'], row['Q'], row['A'], row['B'], row['C'], row['D']) + '\n'
-        elif ans == "Option C":
-            outQ = strQ_C % (i, row['ID'], row['info'], row['Q'], row['A'], row['B'], row['C'], row['D']) + '\n'
-        elif ans == "Option D":
-            outQ = strQ_D % (i, row['ID'], row['info'], row['Q'], row['A'], row['B'], row['C'], row['D']) + '\n'
-        elif row['Q'].startswith("Open"):
-            outQ = strQ_open_ans % (i, row['ID'], row['info'], row['Q'], row['answer']) + '\n'
+        # Add the beginning of the string
+        outQ = strQ_begin % (i, row['ID'], row['info'], row['question']) + '\n'
+
+        # Access all possible options
+        for c in ascii_uppercase:
+            try:
+                row[c] = processQ(row[c]).strip()
+                if len(row[c])>0:
+                    if not ANSWER:
+                        outQ = outQ + (strQ_unchecked % (c, row[c]) + '\n')
+                    else:
+                        if row['answer']=='Option '+c:
+                            outQ = outQ + (strQ_checked % (c, row[c]) + '\n')
+                        else:
+                            outQ = outQ + (strQ_unchecked % (c, row[c]) + '\n')
+
+            except Exception as e: 
+                print("Option ",c," not implemented: ", e)
+        # Add the ending of the string
+        outQ = outQ + strQ_end
         
     print('----Output: ', outQ)
     return outQ
@@ -182,7 +130,7 @@ fNameOut = 'final.tex'
 fOut = open(fNameOut, 'wt')
 
 
-ANSWER=True # NOTE: Set to False for the final exam
+ANSWER=False # NOTE: Set to False for the final exam
 
 # start with question i=1
 i = 1

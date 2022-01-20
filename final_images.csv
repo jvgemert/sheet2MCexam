@@ -1,13 +1,13 @@
-ID;info;Q;A;B;C;D;answer;comments
-Lecture 1;Histograms and color;From the RGB cube, the color plane defined by fixing the coordinate R to 1 (ie: R=1) looks like:;Green, Blue, White;Red, Purple, Black;Red, Yellow, White;Yellow, Purple, Black;Option C;
-Lecture 1;Histograms and color;"Consider these color pairs: RGB(1, 0, 0)-HSI(0, 1, 1); RGB(1, 1, 1)-HSI(0, 0, 1); RGB(0, 0, 0)-HSI(0, 0, 1); RGB(0, 0, 1)-HSI(0, 1, 1/3). How many pairs represents the same color?";Only 1 pair;2 pairs;3 pairs;All 4 pairs;Option A;
-Lecture 1;Histograms and color;Using point processing on pixels with a typical 8-bit per channel RGB encoding, which operations do we need to apply to each channel to obtain an image with inverted colours? (x is the pixel from the input image);Subtract 255 from x;Multiply x by -1 and add (255*3);Multiply x by -1 and add 255;Subtract 128 from x;Option C;
+ID;info;question;A;B;C;D;E;F;answer;comments
+Lecture 1;Histograms and color;From the RGB cube, the color plane defined by fixing the coordinate R to 1 (ie: R=1) looks like:;Green, Blue, White;Red, Purple, Black;Red, Yellow, White;Yellow, Purple, Black;Yellow, Red, Black;Red, Blue, Black;Option C;
+Lecture 1;Histograms and color;"Consider these color pairs: RGB(1, 0, 0)-HSI(0, 1, 1); RGB(1, 1, 1)-HSI(0, 0, 1); RGB(0, 0, 0)-HSI(0, 0, 1); RGB(0, 0, 1)-HSI(0, 1, 1/3). How many pairs represents the same color?";Only 1 pair;2 pairs;3 pairs;;;;Option A;
+Lecture 1;Histograms and color;Using point processing on pixels with a typical 8-bit per channel RGB encoding, which operations do we need to apply to each channel to obtain an image with inverted colours? (x is the pixel from the input image);Subtract 255 from x;Multiply x by -1 and add (255*3);Multiply x by -1 and add 255;Subtract 128 from x;;;Option C;
 Lecture 1;Histograms and color;"Open question: For this 3x4 intensity image and its pixel values.   
     
 
-https://raw.githubusercontent.com/jvgemert/sheet2MCexam/master/example.png     
+https://raw.githubusercontent.com/SilviaLauraPintea/sheet2MCexam/master/example.png     
     
-Draw its histogram and apply histogram equalization. Give all the performed steps.";N.A.;N.A.;N.A.;N.A.;"
+Draw its histogram and apply histogram equalization. Give all the performed steps.";;;;;;;"
 (1pt) Draw its histogram
 
 Apply contrast stretching and give
