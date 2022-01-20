@@ -65,15 +65,15 @@ strQ_end = """
 """
 
 strQ_checked = """
-\\textbf{\\checked %s:} %s \\newline 
+\\textbf{\\checked %s:} %s \\\\ 
 """
 strQ_unchecked = """
-\\textbf{\\unchecked %s:} %s \\newline 
+\\textbf{\\unchecked %s:} %s \\\\ 
 """
 
 """Latex string for including images."""
 fig = """
-\\includegraphics[width=7cm,height=6cm,keepaspectratio]{%s} 
+\\includegraphics[width=7cm,height=5cm,keepaspectratio]{%s} 
 """
 
 
@@ -116,14 +116,16 @@ def formatQ(i, row, ans):
 
 
 def processQ(que):
+    que = que.strip().replace('\n','\\newline ')
     splits = que.split();
     for i in range(0, len(splits)):
-        if splits[i].strip().startswith("http"):
-            print("Link|",splits[i].strip(),"|") 
-            filename = wget.download(splits[i].strip()) 
+        if splits[i].startswith("http"):
+            splits[i] = splits[i].replace('\\newline','')
+            print("Link|",splits[i],"|") 
+            filename = wget.download(splits[i]) 
             splits[i] = fig % (filename) + '\n'
-        splits[i] = splits[i].replace('\n','\\newline')
-    return " ".join(splits) 
+    que = " ".join(splits) 
+    return que
 
 # File name of the output .tex file
 fNameOut = 'final.tex'
@@ -134,7 +136,7 @@ ANSWER=False # NOTE: Set to False for the final exam
 
 # start with question i=1
 i = 1
-with open('final_images.csv', 'rt') as fIn:
+with open('exam.csv', 'rt') as fIn:
     reader = csv.DictReader(fIn, delimiter=';',)
     #reader = csv.DictReader(fIn)
     for row in reader:
