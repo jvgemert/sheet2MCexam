@@ -13,7 +13,10 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
-
+\usepackage{wrapfig}
+\usepackage{tabularx,ragged2e,booktabs}
+\usepackage{subfig}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcommand{\checked}{$\text{\rlap{$\checkmark$}}\square$}
 \newcommand{\unchecked}{$\square$}
 
@@ -26,9 +29,9 @@ Practice example exam, January, 2022. \\
 For each of the 7 lectures there are 3 MCQ questions + 1 Open question, yielding $4 \times 7 =28$ questions in total. There is one correct answer for each MCQ question. Mark the answer on the answer sheet (note the ordering of the A,B,C,D options). Closed book exam: No books, notes, phones, etc allowed. Good luck! 
 
 (Note: In the actual exam the number of questions will be different and the rubric will not be given.)
-\begin{flushright}
+%\begin{flushright}
 \input{final.tex}
-\end{flushright}
+%\end{flushright}
 End of exam.
 
 \end{document}  
