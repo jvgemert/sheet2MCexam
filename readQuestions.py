@@ -34,13 +34,13 @@ from string import ascii_uppercase
 """Latex strings for open questions with or without answers."""
 strQ_open_ans = """
 \\begin{table*}[t!h]
-\\begin{tabular}{|p{8cm}@{\\hskip 0.5cm}p{10.5cm}|} 
+\\begin{tabular}{|p{9cm}@{\\hskip 0.5cm}p{9.5cm}|} 
 \\toprule  
 \\textbf{Question %i} & \\emph{%s \\hfill %s}  \\\\
 \\midrule 
-\\begin{tabular}{p{8cm}} %s 
+\\begin{tabular}{p{9cm}} %s 
 \\end{tabular} &
-\\begin{tabular}{p{10.5cm}}
+\\begin{tabular}{p{9.5cm}}
 \\textbf{Rubric:} \\newline 
 %s  
 \\end{tabular} \\\\ \\bottomrule
@@ -62,14 +62,14 @@ strQ_open = """
 
 """Latex strings for beginning and ending MCQs with or without answers."""
 strQ_begin = """
-\\begin{tabular}{|p{8cm}@{\\hskip 0.5cm}p{10.5cm}|} 
+\\begin{tabular}{|p{9cm}@{\\hskip 0.5cm}p{9.5cm}|} 
 \\toprule  
 \\textbf{Question %i} & \\emph{%s \\hfill %s}  \\\\ 
 \\midrule 
-\\begin{tabular}{p{8cm}}
+\\begin{tabular}{p{9cm}}
 %s 
 \\end{tabular} &
-\\begin{tabular}{p{10.5cm}}
+\\begin{tabular}{p{9.5cm}}
 """
 
 strQ_end = """
@@ -85,8 +85,9 @@ strQ_unchecked = """
 """
 
 """Latex string for including images."""
-fig_open = """\\subfloat[]{\\includegraphics[width=7cm,height=5cm,keepaspectratio]{%s}} """
-fig_mcq = """\\includegraphics[width=7cm,height=5cm,keepaspectratio]{%s} """
+fig_open = """\\subfloat[]{\\includegraphics[width=9cm,height=4cm,keepaspectratio]{%s}} """
+fig_mcq = """\\includegraphics[width=9cm,height=4cm,keepaspectratio]{%s} """
+fig_mcq_ans = """\\includegraphics[width=6cm,height=3cm,keepaspectratio]{%s} """
 
 
 """ Parses the questions ('Q'), answers ('answer') and the multiple choice 
@@ -96,28 +97,29 @@ def formatQ(i, row, ans, variant):
         
     # Parsing open questions
     if row['question'].startswith("Open question"):
-        row['question'] = processQ(row['question'], True)
+        row['question'] = processQ('question',row['question'], isopen=True)
         if not ANSWER:
-            outQ = strQ_open % (i, row['ID'O, row['info'], row['question']) + '\n'
-        else:    
-            outQ = strQ_open_ans % (i, row['ID'], row['info'], row['question'], row['answer']) + '\n'
+            outQ = strQ_open % (i, row['ID'], row['info'], row['question']) 
+        else:  
+            row['answer'] = processQ('answer',row['answer']).strip()
+            outQ = strQ_open_ans % (i, row['ID'], row['info'], row['question'], row['answer']) 
     else:
-        row['question'] = processQ(row['question'], False)
+        row['question'] = processQ('question', row['question'], isopen=False)
         # Add the beginning of the string
         outQ = strQ_begin % (i, row['ID'], row['info'], row['question']) + '\n'
 
         # Access all possible options
         for c in ascii_uppercase:
             try:
-                row[c] = processQ(row[c]).strip()
+                row[c] = processQ(c, row[c]).strip()
                 if len(row[c])>0:
                     if not ANSWER:
-                        printQuest(outQ, c, row[c], strQ_unchecked, variant)
+                        outQ = printQuest(outQ, c, row[c], strQ_unchecked, variant)
                     else:
-                        if row['answer']=='Option '+c:
-                            printQuest(outQ, c, row[c], strQ_checked, variant)
+                        if row['answer'].strip()=='Option '+c:
+                            outQ = printQuest(outQ, c, row[c], strQ_checked, variant)
                         else:
-                            printQuest(outQ, c, row[c], strQ_unchecked, variant)
+                            outQ = printQuest(outQ, c, row[c], strQ_unchecked, variant)
 
             except Exception as e: 
                 print("Option ",c," not implemented: ", e)
@@ -128,10 +130,10 @@ def formatQ(i, row, ans, variant):
     return outQ
                         
 def printQuest(outQ, c, rowC, str2use, variant):
-    outQ = outQ + (str2use % (c, row[c]) + '\n')
+    outQ = outQ + (str2use % (c, rowC) + '\n')
+    return  outQ
 
-
-def processQ(que, isopen=False):
+def processQ(key, que, isopen=False):
     que = que.strip().replace('\n','\\newline ')
     splits = que.split();
     for i in range(0, len(splits)):
@@ -141,6 +143,8 @@ def processQ(que, isopen=False):
             filename = wget.download(splits[i]) 
             if isopen:
                 splits[i] = fig_open % (filename) + ' '
+            elif key.strip()=='answer':
+                splits[i] = fig_mcq_ans % (filename) + ' '
             else:
                 splits[i] = fig_mcq % (filename) + ' '
 
@@ -153,9 +157,9 @@ fOut = open(fNameOut, 'wt')
 
 
 variant = 1
-fOut = fOut + "Exam variant "+str(variant)i+"\\newline"
+fOut.write( "Exam variant "+str(variant)+"\\newline")
 
-ANSWER=False # NOTE: Set to False for the final exam
+ANSWER=True # NOTE: Set to False for the final exam
 
 # start with question i=1
 i = 1
@@ -166,7 +170,7 @@ with open('exam.csv', 'rt') as fIn:
         print('Question %d' % i)
         ans = (row['answer']).strip()
         formatted = formatQ(i, row, ans, variant)
-        fOut.write( formatted )
+        fOut.write( formatted)
         i = i + 1
 fOut.close()
 
