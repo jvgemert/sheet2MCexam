@@ -38,7 +38,7 @@ The first line in the CSV file is the column header, named as:
 
     ID = Some identifier (such as lecture number/title)
     info = Extra information (such as sub-topic)
-    Q = Question
+    question = The question text
     A = Option A
     B = Option B
     C = Option C
