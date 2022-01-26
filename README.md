@@ -42,19 +42,21 @@ The first line in the CSV file is the column header, named as:
     B = Option B
     C = Option C
     D = Option D
+    E = Option E
+    F = Option F
+    ...
     answer = The correct option. Make sure to use "Option A", "Option B", "Option C", "Option D" 
 
 For open questions:
 
     Make sure to start the question with: "Open question: ..."
-    Write: N.A. at the Options A, B, C, D
     Write the grading rubric under the "answer" column.
 
 - Do not use "&" or other characters unescaped in the text. 
 
 - Write all the formulas in latex format: e.g. $\theta = \frac{a}{b}$. 
 
-- Use double new lines when you want them to appear and none for the rest.
+- Use standard textual new lines when you want them to appear and none for the rest (the script parses the new lines).
 
 See the included final.xlsx sheet converted to final.csv for an example.
 
