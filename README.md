@@ -23,7 +23,7 @@ Read a CSV file and output a .tex file with LaTeX tables for multiple choice que
 
 A full example is included which was created as follows:
 
-    1. Export the final.xlsx spreadsheet with the questions to a CSV file final.csv
+    1. Export the final.xlsx spreadsheet with the questions to a CSV file final.csv (Use ";" as separator)
     2. Run readQuestions.py to convert final.csv to a .tex file called final.tex.
     3. Run pdflatex on exam.tex to create the exam.pdf
 
