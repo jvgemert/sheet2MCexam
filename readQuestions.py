@@ -32,9 +32,7 @@ from string import ascii_uppercase
 
 
 """Latex strings for open questions with or without answers."""
-strQ_open_ans = """
-\\begin{table*}[t!h]
-\\begin{tabular}{|p{9cm}@{\\hskip 0.5cm}p{9.5cm}|} 
+strQ_open_ans = """\\begin{tabular}{|p{9cm}@{\\hskip 0.5cm}p{9.5cm}|} 
 \\toprule  
 \\textbf{Question %i} & \\emph{%s \\hfill %s}  \\\\
 \\midrule 
@@ -45,11 +43,9 @@ strQ_open_ans = """
 %s  
 \\end{tabular} \\\\ \\bottomrule
 \\end{tabular}
-\\end{table*}
 """
 
 strQ_open = """
-\\begin{table*}[t!h]
 \\begin{tabular}{|p{19cm}|} 
 \\toprule  
 \\textbf{Question %i}\\hfill \\emph{%s \\hfill %s}  \\\\
@@ -57,12 +53,10 @@ strQ_open = """
 %s \\\\ 
 \\bottomrule
 \\end{tabular}
-\\end{table*}
 """
 
 """Latex strings for beginning and ending MCQs with or without answers."""
-strQ_begin = """
-\\begin{tabular}{|p{9cm}@{\\hskip 0.5cm}p{9.5cm}|} 
+strQ_begin = """\\begin{tabular}{|p{9cm}@{\\hskip 0.5cm}p{9.5cm}|} 
 \\toprule  
 \\textbf{Question %i} & \\emph{%s \\hfill %s}  \\\\ 
 \\midrule 
@@ -85,16 +79,14 @@ strQ_unchecked = """
 """
 
 """Latex string for including images."""
-fig_open = """\\subfloat[]{\\includegraphics[width=9cm,height=4cm,keepaspectratio]{%s}} """
-fig_mcq = """\\includegraphics[width=9cm,height=4cm,keepaspectratio]{%s} """
-fig_mcq_ans = """\\includegraphics[width=6cm,height=3cm,keepaspectratio]{%s} """
+fig = """\\includegraphics[width=9cm,height=4cm,keepaspectratio]{%s} """
+fig_ans = """\\includegraphics[width=5cm,height=3cm,keepaspectratio]{%s} """
 
 
 """ Parses the questions ('Q'), answers ('answer') and the multiple choice 
 options ('A-..') and the open questions and formates each question.
 """
-def formatQ(i, row, ans, variant):
-        
+def formatQ(i, row, ans):
     # Parsing open questions
     if row['question'].startswith("Open question"):
         row['question'] = processQ('question',row['question'], isopen=True)
@@ -106,7 +98,7 @@ def formatQ(i, row, ans, variant):
     else:
         row['question'] = processQ('question', row['question'], isopen=False)
         # Add the beginning of the string
-        outQ = strQ_begin % (i, row['ID'], row['info'], row['question']) + '\n'
+        outQ = strQ_begin % (i, row['ID'], row['info'], row['question']) 
 
         # Access all possible options
         for c in ascii_uppercase:
@@ -114,12 +106,12 @@ def formatQ(i, row, ans, variant):
                 row[c] = processQ(c, row[c]).strip()
                 if len(row[c])>0:
                     if not ANSWER:
-                        outQ = printQuest(outQ, c, row[c], strQ_unchecked, variant)
+                        outQ = printQuest(outQ, c, row[c], strQ_unchecked)
                     else:
                         if row['answer'].strip()=='Option '+c:
-                            outQ = printQuest(outQ, c, row[c], strQ_checked, variant)
+                            outQ = printQuest(outQ, c, row[c], strQ_checked)
                         else:
-                            outQ = printQuest(outQ, c, row[c], strQ_unchecked, variant)
+                            outQ = printQuest(outQ, c, row[c], strQ_unchecked)
 
             except Exception as e: 
                 print("Option ",c," not implemented: ", e)
@@ -129,7 +121,7 @@ def formatQ(i, row, ans, variant):
     print('----Output: ', outQ)
     return outQ
                         
-def printQuest(outQ, c, rowC, str2use, variant):
+def printQuest(outQ, c, rowC, str2use):
     outQ = outQ + (str2use % (c, rowC) + '\n')
     return  outQ
 
@@ -141,12 +133,10 @@ def processQ(key, que, isopen=False):
             splits[i] = splits[i].replace('\\newline','')
             print("Link|",splits[i],"|") 
             filename = wget.download(splits[i]) 
-            if isopen:
-                splits[i] = fig_open % (filename) + ' '
-            elif key.strip()=='answer':
-                splits[i] = fig_mcq_ans % (filename) + ' '
+            if key.strip()=='answer':
+                splits[i] = fig_ans % (filename) + ' '
             else:
-                splits[i] = fig_mcq % (filename) + ' '
+                splits[i] = fig % (filename) + ' '
 
     que = " ".join(splits) 
     return que
@@ -155,21 +145,17 @@ def processQ(key, que, isopen=False):
 fNameOut = 'final.tex'
 fOut = open(fNameOut, 'wt')
 
-
-variant = 1
-fOut.write( "Exam variant "+str(variant)+"\\newline")
-
 ANSWER=True # NOTE: Set to False for the final exam
 
 # start with question i=1
 i = 1
-with open('resit.csv', 'rt') as fIn:
+with open('exam.csv', 'rt') as fIn:
     reader = csv.DictReader(fIn, delimiter=';',)
     #reader = csv.DictReader(fIn)
     for row in reader:
         print('Question %d' % i)
         ans = (row['answer']).strip()
-        formatted = formatQ(i, row, ans, variant)
+        formatted = formatQ(i, row, ans)
         fOut.write( formatted)
         i = i + 1
 fOut.close()
