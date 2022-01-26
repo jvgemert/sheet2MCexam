@@ -29,7 +29,8 @@ A full example is included which was created as follows:
 
 Or using the Makefile:
 
-    1. Run "make"
+    1. Export the final.xlsx spreadsheet with the questions to a CSV file final.csv (Use ";" as separator) 
+    2. Run "make"
 
 ### Spreadsheet layout
 
