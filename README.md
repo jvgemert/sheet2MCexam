@@ -23,13 +23,14 @@ Read a CSV file and output a .tex file with LaTeX tables for multiple choice que
 
 A full example is included which was created as follows:
 
-    1. Export the final.xlsx spreadsheet with the questions to a CSV file final.csv
+    1. Export the final.xlsx spreadsheet with the questions to a CSV file final.csv (Use ";" as separator)
     2. Run readQuestions.py to convert final.csv to a .tex file called final.tex.
     3. Run pdflatex on exam.tex to create the exam.pdf
 
 Or using the Makefile:
 
-    1. Run "make"
+    1. Export the final.xlsx spreadsheet with the questions to a CSV file final.csv (Use ";" as separator) 
+    2. Run "make"
 
 ### Spreadsheet layout
 
@@ -37,24 +38,26 @@ The first line in the CSV file is the column header, named as:
 
     ID = Some identifier (such as lecture number/title)
     info = Extra information (such as sub-topic)
-    Q = Question
+    question = The question text
     A = Option A
     B = Option B
     C = Option C
     D = Option D
+    E = Option E
+    F = Option F
+    ...
     answer = The correct option. Make sure to use "Option A", "Option B", "Option C", "Option D" 
 
 For open questions:
 
     Make sure to start the question with: "Open question: ..."
-    Write: N.A. at the Options A, B, C, D
     Write the grading rubric under the "answer" column.
 
 - Do not use "&" or other characters unescaped in the text. 
 
 - Write all the formulas in latex format: e.g. $\theta = \frac{a}{b}$. 
 
-- Use double new lines when you want them to appear and none for the rest.
+- Use standard textual new lines when you want them to appear and none for the rest (the script parses the new lines).
 
 See the included final.xlsx sheet converted to final.csv for an example.
 

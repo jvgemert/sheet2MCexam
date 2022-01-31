@@ -153,7 +153,7 @@ ANSWER=True # NOTE: Set to False for the final exam
 
 # start with question i=1
 i = 1
-with open('exam.csv', 'rt') as fIn:
+with open('final_images.csv', 'rt') as fIn:
     reader = csv.DictReader(fIn, delimiter=';',)
     #reader = csv.DictReader(fIn)
     for row in reader:
