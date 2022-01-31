@@ -71,6 +71,10 @@ strQ_end = """
 \\end{tabular}
 """
 
+
+strQ_boxed = """
+\\textbf{\\qedsymbol %s:} %s \\\\ 
+"""
 strQ_checked = """
 \\textbf{\\checked %s:} %s \\\\ 
 """
@@ -79,7 +83,7 @@ strQ_unchecked = """
 """
 
 """Latex string for including images."""
-fig = """\\includegraphics[width=9cm,height=4cm,keepaspectratio]{%s} """
+fig = """\\includegraphics[width=9cm,height=5cm,keepaspectratio]{%s} """
 fig_ans = """\\includegraphics[width=5cm,height=3cm,keepaspectratio]{%s} """
 
 
@@ -106,9 +110,9 @@ def formatQ(i, row, ans):
                 row[c] = processQ(c, row[c]).strip()
                 if len(row[c])>0:
                     if not ANSWER:
-                        outQ = printQuest(outQ, c, row[c], strQ_unchecked)
+                        outQ = printQuest(outQ, c, row[c], strQ_boxed)
                     else:
-                        if row['answer'].strip()=='Option '+c:
+                        if (row['answer'].strip()).find('Option '+c)>=0:
                             outQ = printQuest(outQ, c, row[c], strQ_checked)
                         else:
                             outQ = printQuest(outQ, c, row[c], strQ_unchecked)
@@ -156,7 +160,7 @@ with open('exam.csv', 'rt') as fIn:
         print('Question %d' % i)
         ans = (row['answer']).strip()
         formatted = formatQ(i, row, ans)
-        fOut.write( formatted)
+        fOut.write(formatted)
         i = i + 1
 fOut.close()
 
