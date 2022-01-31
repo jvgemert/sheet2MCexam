@@ -46,7 +46,7 @@ The first line in the CSV file is the column header, named as:
     E = Option E
     F = Option F
     ...
-    answer = The correct option. Make sure to use "Option A", "Option B", "Option C", "Option D" 
+    answer = The correct option. Make sure to use "Option A", "Option B", "Option C", "Option D". If multiple options can be correct separate them with ',' or ';'.
 
 For open questions:
 
