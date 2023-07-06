@@ -1,19 +1,19 @@
-ID;info;Q;A;B;C;D;answer
+ID;info;question;A;B;C;D;answer
 Lecture 1;Frequency;An image has low spacial frequency, what would you see.;Very rapid intensity changes;Only very dark colors;About the same colors;Only very light colors;Option C
 Lecture 3;Filtering;"An image is filtered using the kernel:
  {\small $ \frac{1}{3} \begin{bmatrix} 0 & 0 & 0 \\ 1 & 1 & 1 \\ 0 & 0 & 0 \end{bmatrix}$ }
 	What result do you expect?";This will blur the whole image.;This will blur the image, but only in the horizontal direction.;This will blur the image, but only in the vertical direction.;There will be no effect at all.;Option B
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
-Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;The answer
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
+Some identifier;Extra info;The question;Option A;Option B;Option C;Option D;Option B
